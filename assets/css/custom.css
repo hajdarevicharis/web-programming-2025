@@ -55,13 +55,14 @@ body, ul, li, p, a, label, input, div {
 .text-success { color: #59ab6e !important;}
 .text-light { color: #cfd6e1 !important;}
 .text-primary { color: #212934 !important;}
-.bg-dark { background-color: #212934 !important;}
+.bg-dark { background-color: #030508 !important;}
 .bg-light { background-color: #e9eef5 !important;}
-.bg-black { background-color: #1d242d !important;}
-.bg-success { background-color: #212934  !important;}
+.bg-black { background-color: #030508 !important;}
+.bg-success { background-color: #030508 !important;}
 .btn-success {
-  background-color: #212934  !important;
-  border-color: #212934  !important;
+  background-color: #030508  !important;
+  border-color: #030508  !important;
+  padding: 10px 30px;
 }
 .pagination .page-link:hover {color: #000;}
 .pagination .page-link:hover, .pagination .page-link.active {
@@ -196,6 +197,5 @@ body, ul, li, p, a, label, input, div {
   font-family: "Caveat", cursive;
   font-weight: 700;
 }
-
 
 
