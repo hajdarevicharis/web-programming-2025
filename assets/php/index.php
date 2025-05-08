@@ -1,56 +1,20 @@
-<!-- HTML for static distribution bundle build -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Web Programming API</title>
-    <link rel="stylesheet" type="text/css" href="swagger-ui.css" >
-    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-    <style>
-      html
-      {
-        box-sizing: border-box;
-        overflow: -moz-scrollbars-vertical;
-        overflow-y: scroll;
-      }
-      *,
-      *:before,
-      *:after
-      {
-        box-sizing: inherit;
-      }
-      body
-      {
-        margin:0;
-        background: #fafafa;
-      }
-    </style>
-  </head>
+<?php
+// <!-- this makes it so that we have a single point access to our php filed, we don't want users to enter in the URL any php script they want -->
 
-  <body>
-    <div id="swagger-ui"></div>
-    <script src="swagger-ui-bundle.js"> </script>
-    <script src="swagger-ui-standalone-preset.js"> </script>
-    <script>
-    window.onload = function() {
-      // Begin Swagger UI call region
-      const ui = SwaggerUIBundle({
-        url: "swagger.php",
-        dom_id: '#swagger-ui',
-        deepLinking: true,
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset
-        ],
-        plugins: [
-          SwaggerUIBundle.plugins.DownloadUrl
-        ],
-        layout: "StandaloneLayout"
-      })
-      // End Swagger UI call region
-      window.ui = ui
-    }
-  </script>
-  </body>
-</html>
+require "vendor/autoload.php";
+
+require "rest/routes/middleware_routes.php";
+
+require "rest/routes/product_routes.php";
+require "rest/routes/user_routes.php";
+require "rest/routes/cart_routes.php";
+require "rest/routes/auth_routes.php";
+// require "public/v1/docs/swagger.php"; NE TREBA OVO, INACE NIJE RADILO KAD ACCESSAM URL public/v1/docs, FIX JE BIO DA U .htaccess DODAMO ONA DVA RewriteCond
+
+Flight::route("GET /web", function() {
+    echo "GET REQ RADI";
+    // $data = Flight::get("product_service")->get_all_products();
+    // Flight::json($data);
+});
+
+Flight::start();
