@@ -7,6 +7,184 @@
   </head>
 
   <body>
-   
+    <main class="px-4 py-5" style="min-height: 60vh">
+      <div class="modal-item" id="admin-product-modal">
+        <!-- Button trigger modal -->
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#admin-modal"
+        >
+          Add product
+        </button>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="admin-modal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="col-md-9 m-auto" id="add-product-form">
+                  <!-- <div class="mb-3"> -->
+                    <!-- <label for="id">Id</label> -->
+                    <input
+                        type="hidden"
+                        id="product-admin-id"
+                        name="id"
+                      />
+                  <!-- </div> -->
+                  <div class="mb-3">
+                    <label for="name">Name</label>
+                    <input
+                      type="text"
+                      class="form-control mt-1"
+                      id="product-admin-name"
+                      name="name"
+                      placeholder="Name..."
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="brand">Brand</label>
+                    <input
+                      type="text"
+                      class="form-control mt-1"
+                      id="product-admin-brand"
+                      name="brand"
+                      placeholder="Brand..."
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="description">Description</label>
+                    <input
+                      type="text"
+                      class="form-control mt-1"
+                      id="product-admin-description"
+                      name="description"
+                      placeholder="Description..."
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="gender">Gender</label>
+                    <input
+                      type="text"
+                      class="form-control mt-1"
+                      id="product-admin-gender"
+                      name="gender"
+                      placeholder="Gender..."
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="category">Category</label>
+                    <input
+                      type="text"
+                      class="form-control mt-1"
+                      id="product-admin-category"
+                      name="category"
+                      placeholder="Category..."
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="rating">Rating</label>
+                    <input
+                      type="number"
+                      class="form-control mt-1"
+                      id="product-admin-rating"
+                      name="rating"
+                      placeholder="1-5"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="price">Price</label>
+                    <input
+                      type="number"
+                      class="form-control mt-1"
+                      id="product-admin-price"
+                      name="price"
+                      placeholder="Price..."
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="name">Image</label>
+                    <input
+                      type="file"
+                      class="form-control mt-1"
+                      id="product-admin-image"
+                      name="image"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    Add product
+                  </button>
+                </form>
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive mt-5">
+        <table
+            id="admin-table-products"
+            class="table table-striped table-bordered table-hover table-responsive"
+          >
+          <thead>
+            <tr>
+              <th data-name="action">Actions</th>
+              <th data-name="name">Name</th>
+              <th data-name="brand">Brand</th>
+              <th data-name="description">Description</th>
+              <th data-name="gender">Gender</th>
+              <th data-name="category">Category</th>
+              <th data-name="rating">Rating</th>
+              <th data-name="price">Price</th>
+              <th data-name="createdAt">Created at</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-responsive mt-5">
+        <table
+            id="admin-table-users"
+            class="table table-striped table-bordered table-hover table-responsive"
+          >
+          <thead>
+            <tr>
+              <th data-name="action">Action</th>
+              <th data-name="id">Id</th>
+              <th data-name="firstName">First names</th>
+              <th data-name="lastName"">Last name</th>
+              <th data-name="email">Email</th>
+              <th data-name="isAdmin">Is Admin</th>
+              <th data-name="createdAt">Created at</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </main>
+    <script src="assets/js/services/product.js"></script>
+    <script src="assets/js/services/user.js"></script>
+    <script src="assets/js/shop-admin.js"></script>
   </body>
 </html>

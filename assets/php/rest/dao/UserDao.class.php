@@ -34,6 +34,10 @@ class UserDao extends BaseDao {
     }
 
     public function add_user($user) {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
         $query = "INSERT INTO user(firstName, lastName, email, pwd) VALUES(:firstName, :lastName, :email, :pwd);";
         $statement = $this->connection->prepare($query);
         $statement->execute([

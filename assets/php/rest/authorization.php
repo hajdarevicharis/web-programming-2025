@@ -1,15 +1,17 @@
 <?php
 
+require_once __DIR__ . '/config.php';
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 function authorize() {
     try {
-        $token = Flight::request()->getHeader("Authentication");
+        $token = Flight::request()->getHeader("Authorization");
         if(!$token) {
             Flight::halt(500, "Missing Auth Header");
         }
-        $decoded_token = JWT::decode($token, new Key(JWT_SECRET, "HS256"));
+        $decoded_token = JWT::decode($token, new Key(Config::JWT_SECRET(), "HS256"));
         // Flight::json([
         //     "jwt_decoded" => $decoded_token,
         //     "user" => $decoded_token->user
