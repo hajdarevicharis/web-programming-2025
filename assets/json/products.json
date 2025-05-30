@@ -1,0 +1,211 @@
+[
+  {
+    "id": 1,
+    "name": "Oakley Holbrook Sunglasses",
+    "rating": 1,
+    "price": 19.99,
+    "description": "Classic Oakley Holbrook sunglasses with a timeless design inspired by the surf and skate culture. Features durable O Matter frame construction and provides excellent UV protection for everyday wear.",
+    "brand": "Oakley",
+    "image": "assets/img/glasses-1.jpg",
+    "gender": "male",
+    "category": "sunglasses"
+  },
+  {
+    "id": 2,
+    "name": "Ray-Ban Wayfarer Classic",
+    "rating": 5,
+    "price": 39.99,
+    "description": "Iconic Ray-Ban Wayfarer sunglasses that defined a generation. These classic frames offer timeless style with crystal-clear lenses and comfortable fit, perfect for any face shape.",
+    "brand": "Ray-Ban",
+    "image": "assets/img/glasses-2.avif",
+    "gender": "female",
+    "category": "sunglasses"
+  },
+  {
+    "id": 3,
+    "name": "Persol PO3019S Steve McQueen",
+    "rating": 4,
+    "price": 49.99,
+    "description": "Vintage-inspired Persol sunglasses made famous by Steve McQueen. Handcrafted Italian acetate frames with distinctive arrow hinges and superior Meflecto system for maximum comfort.",
+    "brand": "Persol",
+    "image": "assets/img/glasses-3.avif",
+    "gender": "male",
+    "category": "glasses"
+  },
+  {
+    "id": 4,
+    "name": "Gucci GG0061S Oversized",
+    "rating": 5,
+    "price": 59.99,
+    "description": "Luxurious oversized Gucci sunglasses featuring the iconic double G logo. These glamorous frames combine Italian craftsmanship with contemporary style, perfect for making a fashion statement.",
+    "brand": "Gucci",
+    "image": "assets/img/glasses-4.avif",
+    "gender": "female",
+    "category": "sunglasses"
+  },
+  {
+    "id": 5,
+    "name": "Maui Jim Peahi Polarized",
+    "rating": 4,
+    "price": 79.99,
+    "description": "High-performance Maui Jim sunglasses with patented PolarizedPlus2 lens technology. Designed for active lifestyles, these frames offer superior glare reduction and enhanced color contrast.",
+    "brand": "Maui Jim",
+    "image": "assets/img/glasses-5.avif",
+    "gender": "female",
+    "category": "glasses"
+  },
+  {
+    "id": 6,
+    "name": "Tom Ford Cliff Aviators",
+    "rating": 5,
+    "price": 49.99,
+    "description": "Sophisticated Tom Ford aviator sunglasses with sleek metal construction and premium lenses. These luxury frames embody modern elegance with attention to detail and superior craftsmanship.",
+    "brand": "Tom Ford",
+    "image": "assets/img/glasses-6.avif",
+    "gender": "male",
+    "category": "sunglasses"
+  },
+  {
+    "id": 7,
+    "name": "Prada PR01OS Conceptual",
+    "rating": 2,
+    "price": 49.99,
+    "description": "Contemporary Prada sunglasses from the Conceptual collection. Features geometric frames with distinctive Prada logo detailing and gradient lenses for a modern, sophisticated look.",
+    "brand": "Prada",
+    "image": "assets/img/glasses-7.avif",
+    "gender": "female",
+    "category": "sunglasses"
+  },
+  {
+    "id": 8,
+    "name": "Dior Homme BlackTie",
+    "rating": 1,
+    "price": 49.99,
+    "description": "Elegant Dior Homme BlackTie sunglasses combining classic sophistication with modern design elements. Premium acetate construction with subtle logo branding for refined luxury appeal.",
+    "brand": "Dior",
+    "image": "assets/img/glasses-2.avif",
+    "gender": "male",
+    "category": "sunglasses"
+  },
+  {
+    "id": 9,
+    "name": "Versace VE2150Q Medusa",
+    "rating": 5,
+    "price": 49.99,
+    "description": "Bold Versace sunglasses featuring the iconic Medusa logo and Greek key detailing. These statement frames combine Italian luxury with distinctive baroque-inspired design elements.",
+    "brand": "Versace",
+    "image": "assets/img/glasses-2.avif",
+    "gender": "male",
+    "category": "glasses"
+  },
+  {
+    "id": 10,
+    "name": "Aviator Nation Retro Round",
+    "rating": 4,
+    "price": 29.99,
+    "description": "Vintage-inspired round sunglasses with gold-tone metal frames and tinted lenses. These retro-chic frames capture the essence of 70s California cool with modern UV protection technology.",
+    "brand": "Aviator Nation",
+    "image": "assets/img/glasses-5.avif",
+    "gender": "female",
+    "category": "sunglasses"
+  },
+  {
+    "id": 11,
+    "name": "Warby Parker Harper Square",
+    "rating": 5,
+    "price": 35.99,
+    "description": "Modern square-frame sunglasses crafted from premium acetate with anti-reflective coating. These contemporary frames offer a perfect blend of style and functionality for everyday wear.",
+    "brand": "Warby Parker",
+    "image": "assets/img/glasses-7.avif",
+    "gender": "male",
+    "category": "glasses"
+  },
+  {
+    "id": 12,
+    "name": "Celine CL40019I Cat-Eye",
+    "rating": 5,
+    "price": 89.99,
+    "description": "Sophisticated cat-eye sunglasses from Celine's luxury collection. Features distinctive angular frames with gradient lenses and subtle logo detailing for an effortlessly chic Parisian look.",
+    "brand": "Celine",
+    "image": "assets/img/glasses-6.avif",
+    "gender": "female",
+    "category": "glasses"
+  },
+  {
+    "id": 13,
+    "name": "Oliver Peoples O'Malley Sun",
+    "rating": 3,
+    "price": 65.99,
+    "description": "Classic keyhole bridge sunglasses with handcrafted Italian acetate frames. These vintage-inspired glasses feature premium Carl Zeiss lenses and represent timeless American optical heritage.",
+    "brand": "Oliver Peoples",
+    "image": "assets/img/glasses-4.avif",
+    "gender": "male",
+    "category": "sunglasses"
+  },
+  {
+    "id": 14,
+    "name": "Bottega Veneta BV1035S",
+    "rating": 4,
+    "price": 75.99,
+    "description": "Minimalist luxury sunglasses featuring Bottega Veneta's signature intrecciato weave pattern on the temples. These understated frames embody Italian craftsmanship and contemporary elegance.",
+    "brand": "Bottega Veneta",
+    "image": "assets/img/glasses-3.avif",
+    "gender": "female",
+    "category": "sunglasses"
+  },
+  {
+    "id": 15,
+    "name": "Carrera Champion Retro",
+    "rating": 2,
+    "price": 42.99,
+    "description": "Sporty aviator-style sunglasses with distinctive Carrera design heritage. Features lightweight metal construction with rubber temple tips and high-performance lenses for active lifestyles.",
+    "brand": "Carrera",
+    "image": "assets/img/glasses-4.avif",
+    "gender": "male",
+    "category": "sunglasses"
+  },
+  {
+    "id": 16,
+    "name": "Saint Laurent SL 276 MICA",
+    "rating": 5,
+    "price": 69.99,
+    "description": "Bold geometric sunglasses from Saint Laurent's rock-chic collection. These statement frames feature sharp angles and dark lenses, perfect for channeling Parisian attitude and modern glamour.",
+    "brand": "Saint Laurent",
+    "image": "assets/img/glasses-2.avif",
+    "gender": "female",
+    "category": "sunglasses"
+  },
+  {
+    "id": 17,
+    "name": "Moscot Lemtosh Sun",
+    "rating": 4,
+    "price": 55.99,
+    "description": "Iconic New York eyewear with thick acetate frames and keyhole nose bridge. These handcrafted sunglasses represent over 100 years of Moscot family tradition and timeless downtown style.",
+    "brand": "Moscot",
+    "image": "assets/img/glasses-7.avif",
+    "gender": "male",
+    "category": "glasses"
+  },
+  {
+    "id": 18,
+    "name": "Gentle Monster Dreamer",
+    "rating": 3,
+    "price": 58.99,
+    "description": "Avant-garde Korean design meets futuristic styling in these unique oversized frames. Features experimental proportions and innovative materials for fashion-forward individuals seeking distinctive eyewear.",
+    "brand": "Gentle Monster",
+    "image": "assets/img/glasses-3.avif",
+    "gender": "female",
+    "category": "glasses"
+  },
+  {
+    "id": 19,
+    "name": "Costa Del Mar Blackfin",
+    "rating": 5,
+    "price": 45.99,
+    "description": "Performance fishing sunglasses with polarized 580 lens technology for superior clarity on the water. Lightweight bio-resin construction with hydrolite grips ensures all-day comfort during outdoor adventures.",
+    "brand": "Costa Del Mar",
+    "image": "assets/img/glasses-5.avif",
+    "gender": "male",
+    "category": "glasses"
+  }
+]

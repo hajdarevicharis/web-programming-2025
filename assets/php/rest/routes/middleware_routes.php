@@ -4,7 +4,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 Flight::route("/*", function() {
-    if(strpos(Flight::request()->url, "/auth/login") === 0 || strpos(Flight::request()->url, "/auth/register") === 0) {
+    if(strpos(Flight::request()->url, "/auth/login") === 0 || strpos(Flight::request()->url, "/users/add") === 0) {
         return TRUE;
     } else {
         // throw new Exception("This works correctly, testing log error", 502);

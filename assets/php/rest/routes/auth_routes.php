@@ -34,9 +34,15 @@ Flight::group("/auth", function() {
         $user = Flight::get("auth_service")->get_user_by_email($payload["email"]); // user nam je user koji smo fetchali iz base na osnovu emaila
 
         // Password
+        if (!$user) {   
+            Flight::halt(400, "user not found");
+        }
 
-        if(!$user || !password_verify($payload["pwd"], $user["pwd"])) {
-            Flight::halt(500, "Invalid email or password");
+        if(!password_verify($payload["pwd"], $user["pwd"])) {
+            // echo $payload["pwd"];
+            // echo $user["pwd"];
+            var_dump(password_verify("emir", '$2y$10$YhVve9XDKvH5n'));
+            Flight::halt(400, "Invalid email or password");
         }
         unset($user["pwd"]); // we don't even want to return the hashed password of the user
         

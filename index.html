@@ -56,7 +56,7 @@
           <div>
             <a
               class="text-light"
-              href="https://fb.com/templatemo"
+              href="https://facebook.com"
               target="_blank"
               rel="sponsored"
               ><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i
@@ -192,10 +192,10 @@
     </div>
 
     <main id="spapp" role="main">
-      <!-- <section id="shop-admin" data-load="shop-admin.html"></section> -->
+      <section id="shop-admin" data-load="shop-admin.html"></section> 
       <section id="about" data-load="about.html"></section>
       <section id="contact" data-load="contact.html"></section>
-      <!-- <section id="shop-single" data-load="shop-single.html"></section> -->
+      <section id="shop-single" data-load="shop-single.html"></section> 
       <section id="shop" data-load="shop.html"></section>
       <section id="cart" data-load="cart.html"></section> 
       <section id="login" data-load="login.html"></section>
@@ -343,8 +343,8 @@
     <script src="assets/js/select2.min.js"></script>
 
     <script src="assets/js/utils/utils.js"></script>
-    <script src="assets/js/utils/constants.js"></script>
     <script src="assets/js/utils/rest_client.js"></script>
+    <script src="assets/js/utils/constants.js"></script>
 
     <script src="assets/js/toastr.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
@@ -356,7 +356,23 @@
 
       app.run();
     </script>
-
+    
+    <script>
+      if (!Utils.get_from_localstorage("user")) {
+        $("#login-user-link").html(`<i
+                class="fa fa-fw fa-user text-dark mr-3"
+                id="login-user-icon"
+              ></i>`);
+      } else {
+        $("#login-user-link").html(
+          `<div class="d-flex">
+          <p class="mb-0 me-3" onClick="Utils.logout()">Logout</p>
+          <a href="#shop-admin" class="link link-info">Admin</a>
+          </div>
+          `
+        );
+      }
+     </script>
   
   </body>
 </html>

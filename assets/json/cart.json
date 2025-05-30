@@ -1,0 +1,28 @@
+[
+    
+    {
+        "productId": 1,
+        "quantity": 4,
+        "size": "XS"
+    },
+    {
+        "productId": 2,
+        "quantity": 2,
+        "size": "M"
+    },
+    {
+        "productId": 3,
+        "quantity": 2,
+        "size": "L"
+    },
+    {
+        "productId": 4,
+        "quantity": 1,
+        "size": "XL"
+    },
+    {
+        "productId": 5,
+        "quantity": 3,
+        "size": "S"
+    }
+]
