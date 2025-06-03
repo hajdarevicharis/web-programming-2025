@@ -1,7 +1,7 @@
 let logins = [];
 
 if(Utils.get_from_localstorage("user")) {
-    window.location = "../Web-Programming-2025/index.html";
+    window.location = "../index.html";
 }
 
 $("#login-form").validate({
@@ -31,6 +31,8 @@ $("#login-form").validate({
         let login = serializeForm(form);
         console.log(JSON.stringify(login));
 
+        
+
         RestClient.post(
             "auth/login",
             login,
@@ -41,7 +43,7 @@ $("#login-form").validate({
                 // Utils.set_to_localstorage("user", JSON.parse(response));
                 console.log("Response is ", response);
 
-                window.location = "../Web-Programming-2025/index.html";
+                window.location = "../index.html";
             },
             function(error) {
                 Utils.unblock_ui("body");

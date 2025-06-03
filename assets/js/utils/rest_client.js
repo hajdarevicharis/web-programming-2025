@@ -27,7 +27,7 @@ var RestClient = {
         beforeSend: function(xhr) {
             if(Utils.get_from_localstorage("user")) {
                 xhr.setRequestHeader(
-                    "Authentication",
+                    "Authorization",
                     JSON.parse(Utils.get_from_localstorage("user")).token
                 );
             }

@@ -8,6 +8,79 @@ use Firebase\JWT\Key;
 Flight::set("auth_service", new AuthService);
 
 Flight::group("/auth", function() {
+    /** 
+    * @OA\Post(
+        *      path="/auth/register",
+        *      tags={"auth"},
+        *      summary="Register new user account",
+        *      @OA\Response(
+        *           response=201,
+        *           description="User registered successfully"
+        *      ),
+        *      @OA\Response(
+        *           response=400,
+        *           description="Registration failed - validation error"
+        *      ),
+        *      @OA\RequestBody(
+        *          description="User registration data",
+        *          @OA\JsonContent(
+        *              required={"firstName", "lastName", "email", "pwd", "repeat_password"},
+        *              @OA\Property(property="firstName", type="string", example="Haris", description="User First Name"),
+        *              @OA\Property(property="lastName", type="string", example="Hajdarevic", description="User Last Name"),
+        *              @OA\Property(property="email", type="string", example="haris.hajdarevic@gmail.com", description="User Email"),
+        *              @OA\Property(property="pwd", type="string", example="password123", description="User Password"),
+        *              @OA\Property(property="repeat_password", type="string", example="password123", description="Repeat Password"),
+        *          )
+        *      )
+        * )
+        */
+       Flight::route("POST /register", function() {
+           $payload = Flight::request()->data->getData();
+           
+           $required_fields = ['firstName', 'lastName', 'email', 'pwd', 'repeat_password'];
+           foreach($required_fields as $field) {
+               if(empty($payload[$field])) {
+                   Flight::halt(400, "Field '{$field}' is required");
+               }
+           }
+           
+           if($payload['pwd'] !== $payload['repeat_password']) {
+               Flight::halt(400, "Passwords do not match");
+           }
+           
+           if(!filter_var($payload['email'], filter: FILTER_VALIDATE_EMAIL)) {
+               Flight::halt(400, "Invalid email format");
+           }
+           
+           if(strlen($payload['pwd']) < 6) {
+               Flight::halt(400, "Password must be at least 6 characters long");
+           }
+           
+           $existing_user = Flight::get("auth_service")->get_user_by_email($payload["email"]);
+           if($existing_user) {
+               Flight::halt(400, "User with this email already exists");
+           }
+           
+           $fullName = trim($payload['firstName'] . ' ' . $payload['lastName']);
+           
+           $result = Flight::get("auth_service")->register(
+               $payload['email'], 
+               $payload['pwd'], 
+               $fullName,
+               $payload['firstName'],
+               $payload['lastName']
+           );
+           
+           if($result['success']) {
+               Flight::json([
+                   'success' => true,
+                   'message' => $result['message'],
+                   'user_id' => $result['user_id']
+               ], 201);
+           } else {
+               Flight::halt(400, $result['message']);
+           }
+       });
      
     /**
      * @OA\Post(

@@ -1,31 +1,25 @@
 let itemData;
 let shopBodySingle = document.querySelector(".shop-body_single");
 
+// Global cart storage (replaces localStorage for this environment)
+window.cartStorage = window.cartStorage || [];
+
 $(document).ready(function() {
     let id = localStorage.getItem("product-id");
     console.log("LOCALSTORAGE ID: ", id);
 
-    // fetchDataWithId(id, "../assets/json/products.json"); OZTDATED, OVAKO RADI PREKO LIVE SERVERA, A NE RADI PREKO HTDOCS
     fetchDataWithId(id, "./assets/json/products.json");
-    // renderItem();
 })
 
-
-// FETCH ITEM FROM JSON FILE WITH THE SPECIFIC ID SPECIFIED BY THE LOCALSTORAGE("product-id")
 fetchDataWithId = (id, dataUrl) => {
     $.get(dataUrl, (data) => {
-        //console.log(data);
-
         data.forEach(instance => {
             if (instance.id == id) {
                 itemData = instance;
             }
         })
-        // da nam po defaultu rendera iteme cim udjemo na site
-        console.log("ITEM DATA: ", itemData);
-        console.log("ITEM DATA IMAGE: ", itemData.image);
+       
 
-        // MUST CALL renderItem() here, or use async await, but this is simpler, since the script tries to render the item while it still hasn't been fetched
         renderItem();
     });
 }
@@ -118,17 +112,14 @@ renderItem = () => {
                         <h6>Quantity</h6>
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="item-quantity" id="item-quantity" min="0">
+                        <input type="number" class="form-control" name="item-quantity" id="item-quantity" min="1" value="1">
                     </div>
                     </div>
             </div>
             <div class="row pb-3">
-            <!-- <div class="col d-grid">
-                <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
-                </div> -->
             <div class="col d-grid">
             <button
-                type="submit"
+                type="button"
                 class="btn btn-success btn-lg"
                 name="add-to-cart"
                 value="addtocard"
@@ -160,42 +151,120 @@ generateStarIcons = (rating) => {
 }
 
 addToCart = () => {
-    addToCart = () => {
-        // Get selected size and quantity
-        const selectedSize = document.getElementById('item-size').value;
-        const selectedQuantity = parseInt(document.getElementById('item-quantity').value);
-    
-        // Create cart item object
-        const cartItem = {
-            "product-id": itemData.id,
-            "product-quantity": selectedQuantity,
-            "product-size": selectedSize
-        };
-    
-        // Fetch current cart data from the cart.json file
-        $.getJSON('./assets/json/cart.json', function(cart) {
-            // Check if the same product with the same size exists in the cart
-            const existingItemIndex = cart.findIndex(item => item['product-id'] === cartItem['product-id'] && item['product-size'] === cartItem['product-size']);
-    
-            if (existingItemIndex !== -1) {
-                // If the same product with the same size exists, update its quantity
-                cart[existingItemIndex]['product-quantity'] += selectedQuantity;
-            } else {
-                // Otherwise, add the new item to the cart
-                cart.push(cartItem);
-            }
-    
-            // Save updated cart back to the cart.json file
-            $.ajax({
-                url: './assets/json/cart.json',
-                type: 'PUT',
-                data: JSON.stringify(cart),
-                contentType: 'application/json',
-                success: function() {
-                    // Optionally, provide feedback to the user
-                    alert('Product added to cart!');
-                }
-            });
-        });
+    const selectedSize = document.getElementById('item-size').value;
+    const selectedQuantity = parseInt(document.getElementById('item-quantity').value);
+
+    if (!selectedQuantity || selectedQuantity < 1) {
+        alert("Please enter a valid quantity");
+        return;
+    }
+
+    const cartItem = {
+        id: Date.now(), 
+        product_id: itemData.id,
+        name: itemData.name,
+        price: parseFloat(itemData.price),
+        image: itemData.image,
+        size: selectedSize,
+        quantity: selectedQuantity,
+        product_name: itemData.name,
+        product_image: itemData.image,
+        product_size: selectedSize,
+        product_quantity: selectedQuantity,
+        brand: itemData.brand,
+        description: itemData.description
     };
-}
+
+    console.log("New cart item to add:", cartItem);
+
+    const existingItemIndex = window.cartStorage.findIndex(item =>
+        item.product_id === cartItem.product_id &&
+        item.size === cartItem.size
+    );
+
+    if (existingItemIndex !== -1) {
+        window.cartStorage[existingItemIndex].quantity += selectedQuantity;
+        console.log("Updated existing cart item quantity:", window.cartStorage[existingItemIndex]);
+    } else {
+        window.cartStorage.push(cartItem);
+        console.log("Added new item to cart");
+    }
+
+    console.log("Updated cart storage after add:", window.cartStorage);
+
+    if (typeof cartData !== 'undefined') {
+        cartData = [...window.cartStorage]; 
+        console.log("Updated global cartData:", cartData);
+    }
+    
+    if (typeof itemCount !== 'undefined') {
+        itemCount = window.cartStorage.reduce((total, item) => total + item.quantity, 0);
+        console.log("Updated itemCount:", itemCount);
+    }
+
+    if (typeof renderCartItems === 'function') {
+        renderCartItems(window.cartStorage);
+    } else {
+        console.log("renderCartItems function not found");
+    }
+
+    const cartCounter = document.querySelector(".cart-item_count");
+    if (cartCounter) {
+        const totalItems = window.cartStorage.reduce((total, item) => total + item.quantity, 0);
+        cartCounter.innerHTML = totalItems;
+        console.log("Updated cart counter to:", totalItems);
+    } else {
+        console.log("Cart counter element not found");
+    }
+
+    const cartUpdateEvent = new CustomEvent('cartUpdated', {
+        detail: {
+            cartStorage: window.cartStorage,
+            itemCount: window.cartStorage.reduce((total, item) => total + item.quantity, 0)
+        }
+    });
+    window.dispatchEvent(cartUpdateEvent);
+
+    $.ajax({
+        url: "http://localhost/web-programming-2025/assets/php/cart_products",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            user_id: parseInt(localStorage.getItem("user-id")),
+            product_id: itemData.id,
+            product_size: selectedSize,
+            product_quantity: selectedQuantity
+        }),
+        success: function (response) {
+            console.log("Item saved to API successfully:", response);
+            
+            if (typeof renderCartItems === 'function') {
+                renderCartItems(window.cartStorage);
+            }
+            
+            const cartCounter = document.querySelector(".cart-item_count");
+            if (cartCounter) {
+                const totalItems = window.cartStorage.reduce((total, item) => total + item.quantity, 0);
+                cartCounter.innerHTML = totalItems;
+            }
+            
+            alert("Product added to cart!");
+
+        },
+        error: function (xhr, status, error) {
+            console.error("Error adding product to cart:", error);
+            console.log("Error details:", {
+                status: xhr.status,
+                statusText: xhr.statusText,
+                responseText: xhr.responseText
+            });
+            
+            if (typeof renderCartItems === 'function') {
+                renderCartItems(window.cartStorage);
+            }
+            
+            alert("Product added to cart!");
+        }
+    });
+};
+

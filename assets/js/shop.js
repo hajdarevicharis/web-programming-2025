@@ -12,27 +12,43 @@ $(document).ready( () => {
 storeId = (id) => {
   localStorage.setItem("product-id", id);
 } 
-
 getShopItems = (dataUrl) => {
-    $.get(dataUrl, (data) => {
-        //console.log(data);
-
-        data.forEach(instance => {
-            fetchedData.push(instance);
-            //console.log("FETCHED DATA = ", fetchedData)
-        })
-        // da nam po defaultu rendera iteme cim udjemo na site
-        console.log(fetchedData);
-        renderItems(fetchedData);
-    });
+  $.get(dataUrl, (data) => {
+      console.log("Data fetched:", data);
+      
+      let itemsArray;
+      
+      if (Array.isArray(data)) {
+          itemsArray = data;
+      } else if (data.products && Array.isArray(data.products)) {
+          itemsArray = data.products;
+      } else if (data.data && Array.isArray(data.data)) {
+          itemsArray = data.data;
+      } else if (data.items && Array.isArray(data.items)) {
+          itemsArray = data.items;
+      } else {
+          console.error("Could not find array in response:", data);
+          return;
+      }
+      
+      
+      fetchedData = [];
+      itemsArray.forEach(instance => {
+          fetchedData.push(instance);
+      });
+      
+      console.log("FETCHED DATA = ", fetchedData);
+      renderItems(fetchedData);
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.error("Error fetching data:", textStatus, errorThrown);
+      console.error("Response text:", jqXHR.responseText);
+  });
 }
 
 renderItems = (itemsArray) => {
-  // Clear all shop sections
   $(".shop-body_sunglasses").empty();
   $(".shop-body_glasses").empty();
 
-  // Loop through fetched data and append items based on category
   itemsArray.forEach(instance => {
       const item = document.createElement("div");
       item.classList.add("col-md-4");

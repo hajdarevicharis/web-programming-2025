@@ -1,9 +1,4 @@
-let checkoutFormInfo = [];
-
 $(document).ready(function() {
-    $(".custom-select").select2({
-    });
-
     $(".checkout-form").validate({
         rules: {
             "checkout-first_name": {
@@ -17,128 +12,79 @@ $(document).ready(function() {
             "checkout-email": {
                 required: true,
                 email: true
-            },
-            "checkout-address": {
-                required: true,
-                minlength: 4
-            },
-            "checkout-city": {
-                required: true,
-            },
-            "checkout-country": {
-                required: true,
-            },
-            "checkout-zip": {
-                required: true,
-                minlength: 3,
-                digits: true
-            },
-            "checkout-card_name": {
-                required: true,
-                minlength: 4
-            },
-            "checkout-card_number": {
-                required: true,
-                minlength: 16,
-                digits: true
-            },
-            "checkout-card_expiration": {
-                required: true,
-                dateISO: true
-            },
-            "checkout-card_ccv": {
-                required: true,
-                minlength: 3,
-                digits: true
             }
         },
         messages: {
-            "checkout-first_name": {
-                required: "You must enter the first name",
-                minlength: "Enter a valid name"
-            },
-            "checkout-last_name": {
-                required: "You must enter the last name",
-                minlength: "Enter a valid last name"
-            },
-            "checkout-email": {
-                required: "You must enter an email",
-                email: "Enter a valid email address"
-            },
-            "checkout-address": {
-                required: "You must enter an address",
-                minlength: "Enter a valid address"
-            },
-            "checkout-city": {
-                required: "You must enter a city"
-            },
-            "checkout-country": {
-                required: "You must select a country"
-            },
-            "checkout-zip": {
-                required: "You must enter a zip code",
-                minlength: "Enter a valid zip code",
-                digits: "Enter only digits"
-            },
-            "checkout-card_name": {
-                required: "You must enter the cardholder's name",
-                minlength: "Enter a valid cardholder's name"
-            },
-            "checkout-card_number": {
-                required: "You must enter the card number",
-                minlength: "Enter a valid card number",
-                digits: "Enter only digits"
-            },
-            "checkout-card_expiration": {
-                required: "You must enter the card expiration date",
-                dateISO: "Enter a valid date in ISO format (YYYY-MM-DD)"
-            },
-            "checkout-card_ccv": {
-                required: "You must enter the CCV code",
-                minlength: "Enter a valid CCV code",
-                digits: "Enter only digits"
-            }
+            "checkout-first_name": "Please enter your first name",
+            "checkout-last_name": "Please enter your last name",
+            "checkout-email": "Please enter a valid email address"
         },
         submitHandler: function(form, event) {
-            event.preventDefault(); // da mi ne submita
-            blockUi("body");
-            let checkoutInfo = serializeForm(form);
-            console.log(JSON.stringify(checkoutInfo));
-
-            checkoutFormInfo.push(checkoutInfo);
-            console.log("CHECKOUT INFO = ", checkoutFormInfo);
-            // $(".checkout-form")[0].reset();
-            form.reset();
-
-            unblockUi("body");
+            event.preventDefault();
+            processOrder();
         }
     });
-
-    blockUi = (element) => {
-        $(element).block({
-            message: '<div class="spinner-border text-primary" role="status"></div>',
-            css: {
-                backgroundColor: "transparent",
-                border: "0"
-            },
-            overlayCSS: {
-                backgroundColor: "#000000",
-                opacity: 0.25
-            }
-        });
-    }
-
-    unblockUi = (element) => {
-        $(element).unblock({});
-    }
-
-    serializeForm = (form) => {
-        let jsonResult = {};
-        //console.log($(form).serializeArray());
-        //serializeArray() reutrns an array of: name: [name of filed], value: [value of filed] for each field in the form
-        $.each($(form).serializeArray(), function() {
-            jsonResult[this.name] = this.value;
-        });
-        return jsonResult;
-    }
 });
+
+function processOrder() {
+
+    if (!Utils.get_from_localstorage("user")) {
+        alert("Please log in to complete your purchase.");
+        return;
+    }
+
+    const cartItems = window.cartStorage || [];
+    if (cartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const total = cartItems.reduce((sum, item) => {
+        const price = parseFloat(item.price || item.product_price || 0);
+        const quantity = parseInt(item.quantity || item.product_quantity || 1);
+        return sum + (price * quantity);
+    }, 0);
+
+    const orderData = {
+        user_id: parseInt(Utils.get_localstorage_user_value("id")),
+        payment_id: null,
+        order_details: {
+            total_amount: total.toFixed(2)
+        },
+        items: cartItems.map(item => ({
+            product_id: item.product_id || item.id,
+            quantity: parseInt(item.quantity || item.product_quantity || 1)
+        }))
+    };
+
+    RestClient.post("orders", orderData,
+        function(response) {
+            clearCart();
+            alert(`Order placed successfully! Order ID: ${response.order_id}`);
+            $(".checkout-form")[0].reset();
+        },
+        function(error) {
+            console.error("Order failed:", error);
+            alert("There was an error processing your order. Please try again.");
+        }
+    );
+}
+
+function clearCart() {
+    window.cartStorage = [];
+
+    const cartCounter = document.querySelector(".cart-item_count");
+    if (cartCounter) {
+        cartCounter.innerHTML = "0";
+    }
+
+    const userId = parseInt(Utils.get_localstorage_user_value("id"));
+    RestClient.delete(`cart_products/user/${userId}/clear`, {},
+        function(response) {
+            console.log("Cart cleared");
+        },
+        function(error) {
+            console.log("Could not clear cart from backend");
+        }
+    );
+}
